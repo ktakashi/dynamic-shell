@@ -17,7 +17,7 @@ jobs:
             echo "NEW_ENV=ok" >> $GITHUB_ENV
       - name: Check
         run: |
-          if [ "ok" != "$NEW_ENV" ];
+          if [[ "ok" != "$NEW_ENV" ]]; then
             echo "::error::output unexpected environment value, '$NEW_ENV'"
             exit 1
           fi
