@@ -31,12 +31,11 @@ runs:
         for i in "${!lines[@]}"; do
           indent=""
           if [[ i -ne 0 ]]; then
-            for j in {0..$indent}; do
+            for j in {0..8}; do
               indent="$indent "
             done
           fi
-          output="$output
-        $indent${lines[i]}"
+          output="$output\n$indent${lines[i]}"
         done
 
         echo "lines=$output">> $GITHUB_OUTPUT
@@ -57,7 +56,7 @@ runs:
               id: exec
               shell: ${{ inputs.shell }}
               run: |
-                ${{ steps.indent.lines }}
+                ${{ fromJSON(steps.indent.lines) }}
         DYNAMIC_SHELL_EOF
     - name: Exec
       id: exec
