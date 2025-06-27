@@ -38,6 +38,6 @@ runs:
       id: exec
       uses: ./.tmp-dynamic-shell
     - name: Cleanup
-      if: always() && step.exec.outcome != 'success'
+      if: always() && steps.exec.outcome != 'success'
       shell: bash
       run: rm -rf ./.tmp-dynamic-shell
