@@ -1,7 +1,7 @@
 #!/bin/bash
 
-input=$1
-indent=$2
+input=$ENV_INPUT
+indent=$1
 
 lines=()
 while IFS='' read -r value; do
