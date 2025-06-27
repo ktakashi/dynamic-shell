@@ -20,4 +20,4 @@ jobs:
           if [ "ok" != "$NEW_ENV" ];
             echo "::error::output unexpected environment value, '$NEW_ENV'"
             exit 1
-          else
+          fi
