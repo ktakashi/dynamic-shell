@@ -35,7 +35,8 @@ runs:
               indent="$indent "
             done
           fi
-          output="$output\n$indent${lines[i]}"
+          line="${lines[i]}"
+          output="$output\n$indent${line//\"/\\\"}"
         done
 
         echo "lines=$output">> $GITHUB_OUTPUT
