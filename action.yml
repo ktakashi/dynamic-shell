@@ -19,10 +19,28 @@ runs:
       id: indent
       shell: bash
       run: |
-        lines=$(bash ${{ github.action_path }}/indent.sh 8)
-        echo "lines=$lines">> $GITHUB_OUTPUT
+        input="${{ toJSON(inputs.run) }}"
+        lines=()
+        while IFS='' read -r value; do
+          lines+=("$value")
+        done <<-EOF
+         $(echo "$input")
+        EOF
+
+        output=""
+        for i in "${!lines[@]}"; do
+          indent=""
+          if [[ i -ne 0 ]]; then
+            for j in {0..$indent}; do
+              indent="$indent "
+            done
+          fi
+          output="$output
+        $indent${lines[i]}"
+        done
+
+        echo "lines=$output">> $GITHUB_OUTPUT
       env:
-        ENV_INPUT: ${{ inputs.run }}
     - name: Setup
       shell: bash
       run: |
