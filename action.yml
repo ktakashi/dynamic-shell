@@ -9,7 +9,9 @@ inputs:
     description: Shell command string
     required: true
 outputs:
-  outputs: ${{ steps.exec.outputs.outputs }}
+  outputs:
+    description: Shell execution output.
+    value: ${{ steps.exec.outputs.outputs }}
 runs:
   using: composite
   steps:
