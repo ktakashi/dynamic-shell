@@ -3,21 +3,21 @@ on: workflow_call
 jobs:
   test:
     runs-on: ubuntu-latest
-  env:
-    bash_shell: "bash {0}"
-  steps:
-    - name: Checkout
-      uses: actions/checkout@v4
-    - name: Dynamic Shell
-      uses: ./../dynamic-shell
-      id: bash_shell
-      with:
-        shell: ${{ env.bash_shell }}
+    env:
+      bash_shell: "bash {0}"
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Dynamic Shell
+        uses: ./../dynamic-shell
+        id: bash_shell
+        with:
+          shell: ${{ env.bash_shell }}
+          run: |
+            echo "NEW_ENV=ok" >> $GITHUB_ENV
+      - name: Check
         run: |
-          echo "NEW_ENV=ok" >> $GITHUB_ENV
-    - name: Check
-      run: |
-        if [ "ok" != "$NEW_ENV" ];
-          echo "::error::output unexpected environment value, '$NEW_ENV'"
-          exit 1
-        else
+          if [ "ok" != "$NEW_ENV" ];
+            echo "::error::output unexpected environment value, '$NEW_ENV'"
+            exit 1
+          else
