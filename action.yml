@@ -31,8 +31,7 @@ runs:
             - name: Exec
               id: exec
               shell: ${{ inputs.shell }}
-              run: ${{ toJSON(inputs.run) }}
-                
+              run: "${{ inputs.run }}"
         DYNAMIC_SHELL_EOF
     - name: Exec
       id: exec
