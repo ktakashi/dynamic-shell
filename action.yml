@@ -40,7 +40,6 @@ runs:
         done
 
         echo "lines=$output">> $GITHUB_OUTPUT
-      env:
     - name: Setup
       shell: bash
       run: |
