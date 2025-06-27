@@ -19,7 +19,7 @@ runs:
       id: indent
       shell: bash
       run: |
-        input="$DYNAMIC_SHELL_ENV_INPUT"
+        input=$DYNAMIC_SHELL_ENV_INPUT
         lines=()
         while IFS='' read -r value; do
           lines+=("$value")
@@ -41,7 +41,7 @@ runs:
 
         echo "lines=$output">> $GITHUB_OUTPUT
       env:
-        DYNAMIC_SHELL_ENV_INPUT: ${{ toJSON(inputs.run) }}
+        DYNAMIC_SHELL_ENV_INPUT: "${{ toJSON(inputs.run) }}"
     - name: Setup
       shell: bash
       run: |
