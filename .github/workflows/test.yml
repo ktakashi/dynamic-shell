@@ -14,10 +14,18 @@ jobs:
         with:
           shell: ${{ env.bash_shell }}
           run: |
+            GENERATED=$((RANDOM))
+            echo "::add-mask::$GENERATED"
             echo "NEW_ENV=ok" >> $GITHUB_ENV
+            echo "handle=$GENERATED" >> $GITHUB_OUTPUT
       - name: Check
         run: |
+          generated="${{ steps.bash_shell.outputs.handle }}"
           if [[ "ok" != "$NEW_ENV" ]]; then
             echo "::error::output unexpected environment value, '$NEW_ENV'"
+            exit 1
+          fi
+          if [[ "" == "$generated" ]]; then
+            echo "::error::output handle is not generated"
             exit 1
           fi
