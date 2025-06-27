@@ -1,0 +1,41 @@
+name: Dynamic Shell
+description: Dynamically resolve and use custom Shell.
+author: Takashi Kato
+inputs:
+  shell:
+    description: Custom shell command, e.g. `bash`
+    required: true
+  run:
+    description: Shell command string
+    required: true
+outputs:
+  outputs: ${{ steps.exec.outputs.outputs }}
+runs:
+  using: composite
+  steps:
+    - name: Setup
+      shell: bash
+      run: |
+        mkdir -p ./.tmp-dynamic-shell &&
+        cat <<'DYNAMIC_SHELL_EOF' > ./.tmp-dynamic-shell/action.yml
+        outputs:
+          outputs:
+            value: ${{ '$' }}{{ toJSON(steps.exec.outputs }}
+        runs:
+          using: composite
+          steps:
+            - run: rm -rf ./.tmp-dynamic-shell
+              shell: sh
+            - name: Exec
+              id: exec
+              shell: ${{ inputs.shell }}
+              run: |
+                ${{ inputs.run }}
+        DYNAMIC_SHELL_EOF
+    - name: Exec
+      id: exec
+      uses: ./.tmp-dynamic-shell
+    - name: Cleanup
+      if: always() && step.exec.outcome != 'success'
+      shell: bash
+      run: rm -rf ./.tmp-dynamic-shell
