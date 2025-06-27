@@ -15,6 +15,12 @@ outputs:
 runs:
   using: composite
   steps:
+    - name: Indent
+      id: indent
+      shell: bash
+      run: |
+        lines=$(bash ${{ github.action_path }}/indent.sh "${{ inputs.run }}" 8)
+        echo "lines=$lines">> $GITHUB_OUTPUT
     - name: Setup
       shell: bash
       run: |
@@ -31,7 +37,8 @@ runs:
             - name: Exec
               id: exec
               shell: ${{ inputs.shell }}
-              run: "${{ inputs.run }}"
+              run: |
+                ${{ steps.indent.lines }}
         DYNAMIC_SHELL_EOF
     - name: Exec
       id: exec
