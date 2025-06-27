@@ -19,12 +19,12 @@ runs:
       id: indent
       shell: bash
       run: |
-        input="${{ toJSON(inputs.run) }}"
+        input=${{ toJSON(inputs.run) }}
         lines=()
         while IFS='' read -r value; do
           lines+=("$value")
         done <<-EOF
-         $(echo "$input")
+         $(printf "$input")
         EOF
 
         output=""
