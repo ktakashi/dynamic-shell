@@ -62,9 +62,14 @@ runs:
               shell: ${{ inputs.shell }}
               run: |
         DYNAMIC_SHELL_EOF
-        printf "$DYNAMIC_SHELL_ENV_INPUT" >> ./.tmp-dynamic-shell/action.yml
+        printf "$DYNAMIC_SHELL_ENV_INPUT\n" >> ./.tmp-dynamic-shell/action.yml
       env:
         DYNAMIC_SHELL_ENV_INPUT: "${{ steps.indent.outputs.lines }}"
+    - name: Debug
+      shell: bash
+      run: |
+        content=$(cat ./.tmp-dynamic-shell/action.yml)
+        echo $content
     - name: Exec
       id: exec
       uses: ./.tmp-dynamic-shell
