@@ -57,10 +57,10 @@ runs:
               id: exec
               shell: ${{ inputs.shell }}
               run: |
-                $DYNAMIC_SHELL_EOF
-        DYNAMIC_SHELL_EOF: "${{ steps.indent.outputs.lines }}"
+                $DYNAMIC_SHELL_ENV_INPUT
+        DYNAMIC_SHELL_EOF
       env:
-        DYNAMIC_SHELL_ENV_INPUT: 
+        DYNAMIC_SHELL_ENV_INPUT: "${{ steps.indent.outputs.lines }}"
     - name: Exec
       id: exec
       uses: ./.tmp-dynamic-shell
