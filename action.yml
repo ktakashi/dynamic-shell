@@ -43,7 +43,7 @@ runs:
 
         echo "lines=$output">> $GITHUB_OUTPUT
       env:
-        DYNAMIC_SHELL_ENV_INPUT: ${{ toJSON(inputs.run) }}
+        DYNAMIC_SHELL_ENV_INPUT: "${{ toJSON(inputs.run) }}"
     - name: Setup
       shell: bash
       run: |
@@ -64,7 +64,7 @@ runs:
         DYNAMIC_SHELL_EOF
         printf "$DYNAMIC_SHELL_ENV_INPUT\n" >> ./.tmp-dynamic-shell/action.yml
       env:
-        DYNAMIC_SHELL_ENV_INPUT: ${{ steps.indent.outputs.lines }}
+        DYNAMIC_SHELL_ENV_INPUT: "${{ steps.indent.outputs.lines }}"
     - name: Debug
       shell: bash
       run: cat ./.tmp-dynamic-shell/action.yml
