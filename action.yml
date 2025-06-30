@@ -70,9 +70,6 @@ runs:
     - name: Exec
       id: exec
       uses: ./.tmp-dynamic-shell
-    - name: Debug
-      shell: bash
-      run: echo "${{ steps.exec.outputs.outputs }}"
     - name: Cleanup
       if: always() && steps.exec.outcome != 'success'
       shell: bash

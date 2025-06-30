@@ -18,12 +18,10 @@ jobs:
             echo "::add-mask::$GENERATED"
             echo "NEW_ENV=ok" >> $GITHUB_ENV
             echo "handle=$GENERATED" >> $GITHUB_OUTPUT
-      - name: Debug
-        shell: bash
-        run: echo "${{ toJSON(steps.bash_shell.outputs) }}"
       - name: Check
         run: |
-          generated="${{ steps.bash_shell.outputs.handle }}"
+          # limitation
+          generated="${{ fromJSON(steps.bash_shell.outputs.outputs).handle }}"
           if [[ "ok" != "$NEW_ENV" ]]; then
             echo "::error::output unexpected environment value, '$NEW_ENV'"
             exit 1
