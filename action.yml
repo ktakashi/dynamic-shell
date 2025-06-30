@@ -37,18 +37,20 @@ runs:
           if [ "$output" == "" ]; then
             output="$indent${line//\"/\\\"}"
           else
-            output="$output\n$indent${line//\"/\\\"}"
+            # adding one extra here, no idea why this happens
+            # maybe the $GITHUB_OUTPUT thing?
+            output="$output\n $indent${line//\"/\\\"}"
           fi
         done
 
         echo "lines=$output">> $GITHUB_OUTPUT
       env:
-        DYNAMIC_SHELL_ENV_INPUT: "${{ toJSON(inputs.run) }}"
+        DYNAMIC_SHELL_ENV_INPUT: ${{ toJSON(inputs.run) }}
     - name: Setup
       shell: bash
       run: |
         mkdir -p ./.tmp-dynamic-shell &&
-        cat <<'DYNAMIC_SHELL_EOF' > ./.tmp-dynamic-shell/action.yml
+        cat <<'DYNAMIC_SHELL_EOF' > ./.tmp-dynamic-shell/action.yml &&
         outputs:
           outputs:
             value: ${{ '$' }}{{ toJSON(steps.exec.outputs) }}
@@ -64,7 +66,7 @@ runs:
         DYNAMIC_SHELL_EOF
         printf "$DYNAMIC_SHELL_ENV_INPUT\n" >> ./.tmp-dynamic-shell/action.yml
       env:
-        DYNAMIC_SHELL_ENV_INPUT: "${{ steps.indent.outputs.lines }}"
+        DYNAMIC_SHELL_ENV_INPUT: ${{ steps.indent.outputs.lines }}
     - name: Debug
       shell: bash
       run: cat ./.tmp-dynamic-shell/action.yml
