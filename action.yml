@@ -30,16 +30,14 @@ runs:
         output=""
         for i in "${!lines[@]}"; do
           indent=""
-          if [[ i -ne 0 ]]; then
-            for j in {0..8}; do
-              indent="$indent "
-            done
+          for j in {0..8}; do
+            indent="$indent "
           fi
           line="${lines[i]}"
           output="$output\n$indent${line//\"/\\\"}"
         done
 
-        echo "lines=\"$output\"">> $GITHUB_OUTPUT
+        echo "lines=$output">> $GITHUB_OUTPUT
       env:
         DYNAMIC_SHELL_ENV_INPUT: "${{ toJSON(inputs.run) }}"
     - name: Setup
@@ -59,8 +57,10 @@ runs:
               id: exec
               shell: ${{ inputs.shell }}
               run: |
-                ${{ fromJSON(steps.indent.outputs.lines) }}
-        DYNAMIC_SHELL_EOF
+                $DYNAMIC_SHELL_EOF
+        DYNAMIC_SHELL_EOF: "${{ steps.indent.outputs.lines }}"
+      env:
+        DYNAMIC_SHELL_ENV_INPUT: 
     - name: Exec
       id: exec
       uses: ./.tmp-dynamic-shell
