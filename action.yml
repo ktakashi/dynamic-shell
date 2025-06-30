@@ -11,7 +11,7 @@ inputs:
 outputs:
   outputs:
     description: Shell execution output.
-    value: ${{ steps.exec.outputs }}
+    value: ${{ steps.exec.outputs.outputs }}
 runs:
   using: composite
   steps:
@@ -70,6 +70,8 @@ runs:
     - name: Exec
       id: exec
       uses: ./.tmp-dynamic-shell
+    - name: Debug
+      run: echo ${{ toJSON(steps.exec.outputs) }}
     - name: Cleanup
       if: always() && steps.exec.outcome != 'success'
       shell: bash
