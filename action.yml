@@ -62,6 +62,7 @@ runs:
       env:
         DYNAMIC_SHELL_ENV_INPUT: "${{ steps.indent.outputs.lines }}"
     - name: Debug
+      shell: bash
       run: |
         cat ./.tmp-dynamic-shell/action.yml
     - name: Exec
