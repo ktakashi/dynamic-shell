@@ -27,14 +27,18 @@ runs:
          $(printf "$input")
         EOF
 
+        indent=""
+        for j in {0..8}; do
+          indent="$indent "
+        done
         output=""
         for i in "${!lines[@]}"; do
-          indent=""
-          for j in {0..8}; do
-            indent="$indent "
-          done
           line="${lines[i]}"
-          output="$output\n$indent${line//\"/\\\"}"
+          if [ "$output" == "" ]; then
+            output="$indent${line//\"/\\\"}"
+          else
+            output="$output\n$indent${line//\"/\\\"}"
+          fi
         done
 
         echo "lines=$output">> $GITHUB_OUTPUT
