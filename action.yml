@@ -57,8 +57,8 @@ runs:
               id: exec
               shell: ${{ inputs.shell }}
               run: |
-                $DYNAMIC_SHELL_ENV_INPUT
         DYNAMIC_SHELL_EOF
+        echo $DYNAMIC_SHELL_ENV_INPUT >> ./.tmp-dynamic-shell/action.yml
       env:
         DYNAMIC_SHELL_ENV_INPUT: "${{ steps.indent.outputs.lines }}"
     - name: Exec
