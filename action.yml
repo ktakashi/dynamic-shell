@@ -11,7 +11,7 @@ inputs:
 outputs:
   outputs:
     description: Shell execution output.
-    value: ${{ fromJSON(steps.exec.outputs.outputs) }}
+    value: ${{ toJSON(steps.exec.outputs.outputs) }}
 runs:
   using: composite
   steps:
