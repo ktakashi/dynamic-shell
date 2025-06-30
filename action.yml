@@ -72,7 +72,7 @@ runs:
       uses: ./.tmp-dynamic-shell
     - name: Debug
       shell: bash
-      run: echo "${{ toJSON(steps.exec.outputs) }}"
+      run: echo "${{ steps.exec.outputs.outputs }}"
     - name: Cleanup
       if: always() && steps.exec.outcome != 'success'
       shell: bash
