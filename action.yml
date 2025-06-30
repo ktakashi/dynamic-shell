@@ -28,7 +28,7 @@ runs:
         EOF
 
         indent=""
-        for j in {0..8}; do
+        for j in {1..8}; do
           indent="$indent "
         done
         output=""
@@ -67,9 +67,7 @@ runs:
         DYNAMIC_SHELL_ENV_INPUT: ${{ steps.indent.outputs.lines }}
     - name: Debug
       shell: bash
-      run: |
-        content=$(cat ./.tmp-dynamic-shell/action.yml)
-        echo $content
+      run: cat ./.tmp-dynamic-shell/action.yml
     - name: Exec
       id: exec
       uses: ./.tmp-dynamic-shell
