@@ -19,7 +19,7 @@ runs:
       id: indent
       shell: bash
       run: |
-        input=$DYNAMIC_SHELL_ENV_INPUT
+        input=$(echo $DYNAMIC_SHELL_ENV_INPUT | cut -c 2- | rev | cut -c 2- | rev)
         lines=()
         while IFS='' read -r value; do
           lines+=("$value")
