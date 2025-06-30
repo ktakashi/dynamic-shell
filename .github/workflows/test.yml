@@ -18,6 +18,9 @@ jobs:
             echo "::add-mask::$GENERATED"
             echo "NEW_ENV=ok" >> $GITHUB_ENV
             echo "handle=$GENERATED" >> $GITHUB_OUTPUT
+      - name: Debug
+        shell: bash
+        run: echo "${{ steps.bash_shell.outputs }}"
       - name: Check
         run: |
           generated="${{ steps.bash_shell.outputs.handle }}"
