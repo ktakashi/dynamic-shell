@@ -20,7 +20,7 @@ jobs:
             echo "handle=$GENERATED" >> $GITHUB_OUTPUT
       - name: Debug
         shell: bash
-        run: echo "${{ steps.bash_shell.outputs }}"
+        run: echo "${{ toJSON(steps.bash_shell.outputs) }}"
       - name: Check
         run: |
           generated="${{ steps.bash_shell.outputs.handle }}"
