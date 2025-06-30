@@ -71,6 +71,7 @@ runs:
       id: exec
       uses: ./.tmp-dynamic-shell
     - name: Debug
+      shell: bash
       run: echo ${{ toJSON(steps.exec.outputs) }}
     - name: Cleanup
       if: always() && steps.exec.outcome != 'success'
