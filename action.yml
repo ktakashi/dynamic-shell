@@ -39,7 +39,7 @@ runs:
           output="$output\n$indent${line//\"/\\\"}"
         done
 
-        echo "lines=$output">> $GITHUB_OUTPUT
+        echo "lines=\"$output\"">> $GITHUB_OUTPUT
       env:
         DYNAMIC_SHELL_ENV_INPUT: "${{ toJSON(inputs.run) }}"
     - name: Setup
