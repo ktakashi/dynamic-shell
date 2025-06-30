@@ -11,7 +11,7 @@ inputs:
 outputs:
   outputs:
     description: Shell execution output.
-    value: ${{ steps.exec.outputs.outputs }}
+    value: ${{ steps.exec.outputs }}
 runs:
   using: composite
   steps:
@@ -67,9 +67,6 @@ runs:
         printf "$DYNAMIC_SHELL_ENV_INPUT\n" >> ./.tmp-dynamic-shell/action.yml
       env:
         DYNAMIC_SHELL_ENV_INPUT: ${{ steps.indent.outputs.lines }}
-    - name: Debug
-      shell: bash
-      run: cat ./.tmp-dynamic-shell/action.yml
     - name: Exec
       id: exec
       uses: ./.tmp-dynamic-shell
