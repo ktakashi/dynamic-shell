@@ -53,7 +53,7 @@ runs:
         cat <<'DYNAMIC_SHELL_EOF' > ./.tmp-dynamic-shell/action.yml &&
         outputs:
           outputs:
-            value: ${{ '$' }}{{ steps.exec.outputs }}
+            value: ${{ '$' }}{{ toJSON(steps.exec.outputs) }}
         runs:
           using: composite
           steps:
